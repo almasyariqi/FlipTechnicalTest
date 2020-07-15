@@ -57,35 +57,25 @@ export default class TransactionListScreen extends Component {
 
   sortTransaction(sortKey) {
     const data = Object.entries(this.transactionDataHolder)
-    var newData = []
 
-    if (sortKey == 0) {
-      newData = this.transactionDataHolder
-    } else if (sortKey == 1) {
-      newData = Object.fromEntries(data.sort(([key1, val1], [key2, val2]) => {
-        const nameA = val1.beneficiary_name.toUpperCase();
-        var nameB = val2.beneficiary_name.toUpperCase();
+    var newData = Object.fromEntries(data.sort(([key1, val1], [key2, val2]) => {
+      const nameA = val1.beneficiary_name.toUpperCase();
+      const nameB = val2.beneficiary_name.toUpperCase();
+      const dateA = new Date(val1.created_at);
+      const dateB = new Date(val2.created_at);
+
+      if(sortKey == 0){
+        return this.transactionDataHolder
+      } else if (sortKey == 1) {
         return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0;
-      }))
-    } else if (sortKey == 2) {
-      newData = Object.fromEntries(data.sort(([key1, val1], [key2, val2]) => {
-        const nameA = val1.beneficiary_name.toUpperCase();
-        var nameB = val2.beneficiary_name.toUpperCase();
+      } else if (sortKey == 2) {
         return (nameA > nameB) ? -1 : (nameA < nameB) ? 1 : 0;
-      }))
-    } else if (sortKey == 3) {
-      newData = Object.fromEntries(data.sort(([key1, val1], [key2, val2]) => {
-        const dateA = new Date(val1.created_at);
-        var dateB = new Date(val2.created_at);
+      } else if (sortKey == 3) {
         return (dateA > dateB) ? -1 : (dateA < dateB) ? 1 : 0;
-      }))
-    } else {
-      newData = Object.fromEntries(data.sort(([key1, val1], [key2, val2]) => {
-        const dateA = new Date(val1.created_at);
-        var dateB = new Date(val2.created_at);
+      } else {
         return (dateA < dateB) ? -1 : (dateA > dateB) ? 1 : 0;
-      }))
-    }
+      }
+    }))
 
     this.setState({ transactionData: newData })
   }
