@@ -5,7 +5,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { convertDateIndonesia, convertToRupiah } from '../helper/Formaters';
-import { Clipboard } from "@react-native-community/clipboard";
+import Clipboard from "@react-native-community/clipboard";
 
 export default class TransactionDetailScreen extends Component {
   constructor(props) {
@@ -25,7 +25,11 @@ export default class TransactionDetailScreen extends Component {
     })
 
     this.setState({ transactionDetail: newData })
-  } 
+  }
+  
+  copyToClipboard = (text) => {
+    Clipboard.setString(text)
+  }
 
   render() {
     return (
@@ -36,7 +40,7 @@ export default class TransactionDetailScreen extends Component {
               <View key={value.id} style={{ padding: 20 }}>
                 <View style={{ paddingVertical: 15, flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={{ fontWeight: 'bold', fontSize: 15, marginRight: 10 }}>ID TRANSAKSI: #{value.id}</Text>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.copyToClipboard(value.id)}>
                     <MaterialIcon name='content-copy' size={20} color={color.orange} />
                   </TouchableOpacity>
                 </View>
